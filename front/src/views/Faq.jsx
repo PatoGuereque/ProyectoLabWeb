@@ -69,7 +69,7 @@ export default function CustomizedAccordions() {
       }}>
 
           <Typography>
-            En la pestaña de objetos, se te pedirá que llenes un formulario.
+            Regístrate con tu correo institucional, y a continuación se te habilitará la pestaña de reportar objetos, donde se te pedirá que llenes un formulario.
           </Typography>
         </AccordionDetails>
       </Accordion>
