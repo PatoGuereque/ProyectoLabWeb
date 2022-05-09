@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import NativeSelect from '@mui/material/NativeSelect';;
+import NativeSelect from '@mui/material/NativeSelect';
 
 const ReportarObjeto = () => {
   const { postObject, clearPostResponse, postResponse } = useObjectContext();
@@ -108,7 +108,7 @@ const ReportarObjeto = () => {
               Detalles
             </Typography>
             <Typography
-              component="h7"
+              component="h4"
               variant="h4"
               align="center"
               style={{ fontSize: 15 }}
@@ -117,45 +117,55 @@ const ReportarObjeto = () => {
             </Typography>
             <Grid container spacing={3}>
               <Grid item xs={12}>
-                  <Box sx={{ minWidth: 120 }}>
-                    <FormControl fullWidth>
-                      <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                        Campus *
-                      </InputLabel>
-                      <NativeSelect
-                        inputProps={{
-                          name: 'campus',
-                          id: 'campuse',
-                        }}
-                      >
-                        <option value={"Aguascalientes"}>Aguascalientes</option>
-                        <option value={"Chiapas"}>Chiapas</option>
-                        <option value={"Chihuahua"}>Chihuahua</option>
-                        <option value={"Ciudad de Méxic"}>Ciudad de México</option>
-                        <option value={"Ciudad Juárez"}>Ciudad Juárez</option>
-                        <option value={"Ciudad Obregón"}>Ciudad Obregón</option>
-                        <option value={"Cuernavaca"}>Cuernavaca</option>
-                        <option value={"Estado de México"}>Estado de México</option>
-                        <option value={"Guadalajara"}>Guadalajara</option>
-                        <option value={"Hidalgo"}>Hidalgo</option>
-                        <option value={"Irapuato"}>Irapuato</option>
-                        <option value={"Laguna"}>Laguna</option>
-                        <option value={"León"}>León</option>
-                        <option value={"Monterrey"}>Monterrey</option>
-                        <option value={"Morelia"}>Morelia</option>
-                        <option value={"Puebla"}>Puebla</option>
-                        <option value={"Querétaro"}>Querétaro</option>
-                        <option value={"Saltillo"}>Saltillo</option>
-                        <option value={"San Luis Potosí"}>San Luis Potosí</option>
-                        <option value={"Santa Fe"}>Santa Fe</option>
-                        <option value={"Sinaloa"}>Sinaloa</option>
-                        <option value={"Sonora Norte"}>Sonora Norte</option>
-                        <option value={"Tampico"}>Tampico</option>
-                        <option value={"Toluca"}>Toluca</option>
-                        <option value={"Zacatecas"}>Zacatecas</option>
-                      </NativeSelect>
-                    </FormControl>
-                  </Box>
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel
+                      variant="standard"
+                      htmlFor="uncontrolled-native"
+                    >
+                      Campus *
+                    </InputLabel>
+                    <NativeSelect
+                      inputProps={{
+                        name: 'campus',
+                        id: 'campus',
+                      }}
+                      onChange={(e) =>
+                        updateForm({ ...form, campus: e.target.value })
+                      }
+                    >
+                      <option value={'Aguascalientes'}>Aguascalientes</option>
+                      <option value={'Chiapas'}>Chiapas</option>
+                      <option value={'Chihuahua'}>Chihuahua</option>
+                      <option value={'Ciudad de Méxic'}>
+                        Ciudad de México
+                      </option>
+                      <option value={'Ciudad Juárez'}>Ciudad Juárez</option>
+                      <option value={'Ciudad Obregón'}>Ciudad Obregón</option>
+                      <option value={'Cuernavaca'}>Cuernavaca</option>
+                      <option value={'Estado de México'}>
+                        Estado de México
+                      </option>
+                      <option value={'Guadalajara'}>Guadalajara</option>
+                      <option value={'Hidalgo'}>Hidalgo</option>
+                      <option value={'Irapuato'}>Irapuato</option>
+                      <option value={'Laguna'}>Laguna</option>
+                      <option value={'León'}>León</option>
+                      <option value={'Monterrey'}>Monterrey</option>
+                      <option value={'Morelia'}>Morelia</option>
+                      <option value={'Puebla'}>Puebla</option>
+                      <option value={'Querétaro'}>Querétaro</option>
+                      <option value={'Saltillo'}>Saltillo</option>
+                      <option value={'San Luis Potosí'}>San Luis Potosí</option>
+                      <option value={'Santa Fe'}>Santa Fe</option>
+                      <option value={'Sinaloa'}>Sinaloa</option>
+                      <option value={'Sonora Norte'}>Sonora Norte</option>
+                      <option value={'Tampico'}>Tampico</option>
+                      <option value={'Toluca'}>Toluca</option>
+                      <option value={'Zacatecas'}>Zacatecas</option>
+                    </NativeSelect>
+                  </FormControl>
+                </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -244,4 +254,4 @@ const ReportarObjeto = () => {
   );
 };
 
-export default ReportarObjeto; 
+export default ReportarObjeto;
