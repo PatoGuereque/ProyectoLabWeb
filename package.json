@@ -6,5 +6,8 @@
     "prepare": "husky install && yarn prepare:back && yarn prepare:front",
     "prepare:front": "cd front && yarn install",
     "prepare:back": "cd back && yarn install"
+  },
+  "dependencies": {
+    "lint-staged": "^12.4.2"
   }
 }

@@ -1,0 +1,8 @@
+{
+  "name": "Sistemas de Lost and Found Tec",
+  "description": "Sistema para el lost and found tec",
+  "website": "https://github.com/PatoGuereque",
+  "repository": "https://github.com/PatoGuereque",
+  "success_url": "/",
+  "stack": "container"
+}
