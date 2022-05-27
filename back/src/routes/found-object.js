@@ -9,10 +9,7 @@ const foundObject = express();
 foundObject.get('/objects/list', async (_req, res) => {
   connection.query('SELECT * FROM objects', function (err, result, fields) {
     if (err) throw err;
-    console.log(result);
-  });
-  res.status(200).json({
-    objects: [],
+    return res.status(200).json(result);
   });
 });
 
@@ -30,24 +27,34 @@ foundObject.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    if (!req.user) {
-      return res.status(400).json({ error: 'User is not logged in' });
-    }
+    // if (!req.user) {
+    //   return res.status(400).json({ error: 'User is not logged in' });
+    // }
 
     const { campus, category, dateFound, imageBase64, location, status } =
       req.body;
 
     var sqlQuery =
-      'INSERT INTO objects (campus, location, category, reportingUser, imageBase64, status, dateFound, claimedBy, comments) VALUES' +
-      (campus,
-      location,
-      category,
-      reportingUser,
-      imageBase64,
-      status,
-      dateFound,
-      '',
-      '');
+      "INSERT INTO objects (campus, location, category, reportingUser, imageBase64, status, dateFound, claimedBy, comments) VALUES ('" +
+      campus +
+      "','" +
+      location +
+      "','" +
+      category +
+      "','" +
+      req.user?.email +
+      "','" +
+      imageBase64 +
+      "','" +
+      status +
+      "','" +
+      dateFound +
+      "'," +
+      "''" +
+      ',' +
+      "''" +
+      ')';
+    console.log(sqlQuery);
     connection.query(sqlQuery, function (err, result, fields) {
       if (err) throw err;
       console.log(result);
@@ -57,22 +64,29 @@ foundObject.post(
 );
 
 foundObject.get('/objects/get/:id', async (req, res) => {
-  const objectWithId = await foundObjectRepository.getObjectWithId(
-    req.params.id
-  );
-  res.status(200).json({
-    object: objectWithId,
+  let sqlQuery = "select * from objects where id='" + req.params.id + "'";
+  let obj;
+  connection.query(sqlQuery, function (err, result, fields) {
+    if (err) throw err;
+    console.log(result[0]);
+    res.status(200).json({
+      object: result[0],
+    });
   });
 });
 
-foundObject.post('/objects/desactivar/:id', authRequired, async (req, res) => {
-  const deactivated = await foundObjectRepository.deactivateObject(
-    req.params.id,
-    req.user.email
-  );
-  res.status(200).json({
-    object: deactivated,
+foundObject.post('/objects/desactivar/:id', async (req, res) => {
+  let sqlQuery =
+    "UPDATE objects SET claimedBy='" +
+    req.user?.email +
+    "', status='deactivated' WHERE id='" +
+    req.params.id +
+    "'";
+  connection.query(sqlQuery, function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
   });
+  res.status(200).json('Object updated');
 });
 
 export default foundObject;

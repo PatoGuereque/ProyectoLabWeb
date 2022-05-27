@@ -4,5 +4,6 @@ $ mysql -h localhost -u root -p
 $ mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 $ mysql> flush privileges;
 $ mysql> CREATE DATABASE lostandfound;
-$ mysql> create table users (id varchar(100), email varchar(100) NOT NULL, firstName varchar(100), lastName varchar(100), profilePhoto varchar(100), source varchar(100) NOT NULL, lastVisited Date);
-$ mysql> create table objects (campus varchar(100),location varchar(100),category varchar(100),reportingUser varchar(100), imageBase64 varchar(100),status varchar(100),dateFound DATE,claimedBy varchar(100),comments varchar(100));
+$ mysql> USE lostandfound;
+$ mysql> create table users (id int not null auto_increment, email varchar(100) NOT NULL, firstName varchar(100), lastName varchar(100), profilePhoto varchar(100), source varchar(100) NOT NULL, lastVisited Date);
+$ mysql> create table objects (id int not null auto_increment, campus varchar(100),location varchar(100),category varchar(100),reportingUser varchar(100), imageBase64 varchar(100),status varchar(100),dateFound DATE,claimedBy varchar(100),comments varchar(100), primary key id);
