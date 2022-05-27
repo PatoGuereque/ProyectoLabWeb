@@ -1,46 +1,22 @@
-import mongoose from 'mongoose';
-import { config, up, database } from 'migrate-mongo';
-import { join } from 'path';
-import { mongodbUri } from '../../config';
+import mysql from 'mysql';
 
-const migrationPath = join(__dirname, 'migrations');
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'password',
+  database: 'lostandfound',
+});
 
-const migrationConfig = {
-  mongodb: {
-    url: mongodbUri,
-
-    options: {
-      useNewUrlParser: true, // removes a deprecation warning when connecting
-      useUnifiedTopology: true, // removes a deprecating warning when connecting
-    },
-  },
-
-  migrationsDir: migrationPath,
-  changelogCollectionName: 'changelog',
-  migrationFileExtension: '.js',
-  useFileHash: false,
-  moduleSystem: 'esm',
+const connect = () => {
+  connection.connect(function (err) {
+    if (err) throw err;
+    console.log('Connected!');
+  });
 };
 
-config.set(migrationConfig);
+export { connect, connection };
+// connection.query('SELECT 1 + 1 AS solution', (err, rows, fields) => {
+//   if (err) throw err;
 
-const connect = () =>
-  database
-    .connect()
-    .then(({ db, client }) => {
-      // eslint-disable-next-line no-console
-      console.log('Connected to database, applying migrations');
-      return up(db, client)
-        .then((migrations) => {
-          migrations.forEach((migration) => {
-            // eslint-disable-next-line no-console
-            console.log(`Migrated: ${migration}`);
-          });
-          // eslint-disable-next-line no-console
-          console.log(`Applied ${migrations.length} migration(s)`);
-        })
-        .then(() => client.close());
-    })
-    .then(() => mongoose.connect(mongodbUri));
-
-export { connect };
+//   console.log('The solution is: ', rows[0].solution);
+// });

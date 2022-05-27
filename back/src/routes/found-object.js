@@ -2,15 +2,17 @@ import express from 'express';
 import { body, validationResult } from 'express-validator';
 import { foundObjectRepository } from '../database';
 import { authRequired } from '../middleware/auth-required';
+import { connection } from '../database/mongo';
 
 const foundObject = express();
 
 foundObject.get('/objects/list', async (_req, res) => {
-  const objects = await foundObjectRepository.getFoundObjects();
-  const activeObjects = objects.filter((object) => object.status === 'active');
-
+  connection.query('SELECT * FROM objects', function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+  });
   res.status(200).json({
-    objects: activeObjects,
+    objects: [],
   });
 });
 
@@ -35,14 +37,20 @@ foundObject.post(
     const { campus, category, dateFound, imageBase64, location, status } =
       req.body;
 
-    await foundObjectRepository.createFoundObject({
-      campus,
-      category,
-      dateFound,
-      imageBase64,
+    var sqlQuery =
+      'INSERT INTO objects (campus, location, category, reportingUser, imageBase64, status, dateFound, claimedBy, comments) VALUES' +
+      (campus,
       location,
+      category,
+      reportingUser,
+      imageBase64,
       status,
-      reportingUser: req.user.email,
+      dateFound,
+      '',
+      '');
+    connection.query(sqlQuery, function (err, result, fields) {
+      if (err) throw err;
+      console.log(result);
     });
     return res.status(200).json(req.body);
   }
